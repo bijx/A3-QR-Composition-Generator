@@ -48,7 +48,7 @@ function generateQRCode() {
     const compositionFileContent = configBuilder('QRCodeLayer', qrArray, 'ColorBlack', 'ColorWhite');
 
     console.log(compositionFileContent);
-    // downloadCompositionFile(compositionFileContent);
+    downloadCompositionFile(compositionFileContent);
 }
 
 function generateQRArray(text) {
