@@ -1,10 +1,10 @@
 // configBuilder.js
 import createPixel from './createPixel.js';
 
-export function configBuilder(name, qrCode, fgColor, bgColor) {
+export function configBuilder(name, qrCode, fgColor, bgColor, scale = 1000) {
     // Calculate length
     const size = qrCode.length;
-    const length = (1000 / size) * 2;
+    const length = (scale / size) * 2;
 
     // Start building the config string
     let configString = `version=54;
