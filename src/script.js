@@ -1,6 +1,7 @@
 import configBuilder from './config/configBuilder.js';
 import createHeader from './config/createHeader.js';
 import colors from './definedValues/colors.js';
+import scales from './definedValues/scales.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
     const foregroundColorSelect = document.getElementById('foregroundColor');
@@ -14,6 +15,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
         foregroundColorSelect.appendChild(option.cloneNode(true));
         backgroundColorSelect.appendChild(option.cloneNode(true));
     }
+
+    const scaleSelect = document.getElementById('scale');
+    for (const scaleKey in scales) {
+      const option = document.createElement('option');
+      option.value = scaleKey;
+      option.textContent = scaleKey + ` (${scales[scaleKey]}m)`;
+      scaleSelect.appendChild(option.cloneNode(true));
+    }
+    const customScaleOption = document.createElement('option');
+    customScaleOption.value = 'Custom';
+    customScaleOption.textContent = 'Custom';
+    scaleSelect.appendChild(customScaleOption);
+
 
     updateColorPreview('foregroundColorPreview', 'ColorBlack');
     updateColorPreview('backgroundColorPreview', 'ColorWhite');
