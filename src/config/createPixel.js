@@ -2,7 +2,7 @@ function createPixel(id, length, position, color) {
   const positionString = position.join(',');
 
   let formattedString = `
-class Item${id}
+          class Item${id}
           {
               dataType="Marker";
               position[]={${positionString}};
