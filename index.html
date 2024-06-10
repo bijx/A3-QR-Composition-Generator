@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A3 QR Code Comp Generator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body class="bg-dark text-light">
+    <div class="container mt-5">
+        <h1 class="text-center">A3 QR Code Comp Generator</h1>
+        <form id="qr-form">
+            <div class="form-group">
+                <label for="compName">Composition Name</label>
+                <input type="text" class="form-control" id="compName" placeholder="Enter comp name">
+            </div>
+            <div class="form-group">
+                <label for="qrText">QR Text</label>
+                <input type="text" class="form-control" id="qrText" maxlength="2953" placeholder="Enter text">
+            </div>
+            <div class="form-group">
+                <label for="scale">Scale</label>
+                <select class="form-control" id="scale" onchange="handleScaleChange()">
+                    <option>Altis</option>
+                    <option>Malden</option>
+                    <option>Stratis</option>
+                    <option>Tanoa</option>
+                    <option>Livonia</option>
+                    <option>VR</option>
+                    <option>Custom</option>
+                </select>
+                <input type="number" class="form-control mt-2 d-none" id="customScale" placeholder="Enter custom scale">
+            </div>
+            <div class="form-group">
+                <label for="foregroundColor">Foreground Color</label>
+                <div class="input-group">
+                    <select class="form-control" id="foregroundColor" onchange="updateColorPreview('foregroundColorPreview', this.value)">
+                    </select>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="foregroundColorPreview" style="width: 40px;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="backgroundColor">Background Color</label>
+                <div class="input-group">
+                    <select class="form-control" id="backgroundColor" onchange="updateColorPreview('backgroundColorPreview', this.value)">
+                    </select>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="backgroundColorPreview" style="width: 40px;"></span>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-block" onclick="generateQRCode()">Generate</button>
+        </form>
+    </div>
+    <script type="module" src="src/script.js"></script>
+    <script src="libs/qrcode.min.js"></script>
+</body>
+</html>
