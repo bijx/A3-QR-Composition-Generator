@@ -61,8 +61,12 @@ function generateQRCode() {
         return;
     }
 
+    const scaleSelect = document.getElementById('scale');
+    const customScaleInput = document.getElementById('customScale');
+    const scale = scaleSelect.value === 'Custom' ? parseInt(customScaleInput.value) : scales[scaleSelect.value];
+
     const qrArray = generateQRArray(text);
-    const compositionFileContent = configBuilder('QRCodeLayer', qrArray, 'ColorBlack', 'ColorWhite');
+    const compositionFileContent = configBuilder('QRCodeLayer', qrArray, 'ColorBlack', 'ColorWhite', scale);
     const headerContent = createHeader(compName);
 
     downloadZip(compName, compositionFileContent, headerContent);
