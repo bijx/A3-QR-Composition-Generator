@@ -7,8 +7,7 @@ export function configBuilder(name, qrCode, fgColor, bgColor) {
     const length = (1000 / size) * 2;
 
     // Start building the config string
-    let configString = `
-version=54;
+    let configString = `version=54;
 center[]={0,0,0};
 class items
 {
