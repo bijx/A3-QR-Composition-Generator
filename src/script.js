@@ -65,8 +65,11 @@ function generateQRCode() {
     const customScaleInput = document.getElementById('customScale');
     const scale = scaleSelect.value === 'Custom' ? parseInt(customScaleInput.value) : scales[scaleSelect.value];
 
+    const foregroundColorSelect = document.getElementById('foregroundColor').value;
+    const backgroundColorSelect = document.getElementById('backgroundColor').value;
+
     const qrArray = generateQRArray(text);
-    const compositionFileContent = configBuilder('QRCodeLayer', qrArray, 'ColorBlack', 'ColorWhite', scale);
+    const compositionFileContent = configBuilder('QRCodeLayer', qrArray, foregroundColorSelect ?? 'ColorBlack', backgroundColorSelect ?? 'ColorWhite', scale);
     const headerContent = createHeader(compName);
 
     downloadZip(compName, compositionFileContent, headerContent);
