@@ -1,4 +1,5 @@
 import configBuilder from './config/configBuilder.js';
+import createHeader from './config/createHeader.js';
 import colors from './definedValues/colors.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -39,16 +40,18 @@ function updateColorPreview(previewId, colorKey) {
 
 function generateQRCode() {
     const text = document.getElementById('qrText').value;
+    const compName = document.getElementById('compName').value;
     // if text is more than 150 characters, show an alert
     if (text.length > 150) {
         alert('Text is too long. Please enter a text with less than 150 characters.');
         return;
     }
+
     const qrArray = generateQRArray(text);
     const compositionFileContent = configBuilder('QRCodeLayer', qrArray, 'ColorBlack', 'ColorWhite');
+    const headerContent = createHeader(compName);
 
-    console.log(compositionFileContent);
-    downloadCompositionFile(compositionFileContent);
+    downloadZip(compName, compositionFileContent, headerContent);
 }
 
 function generateQRArray(text) {
@@ -82,16 +85,22 @@ function generateQRArray(text) {
     return qrArray;
 }
 
-function downloadCompositionFile(content) {
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'composition.sqe';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+function sanitizeCompName(name) {
+    return name.replace(/[^a-z0-9]/gi, '').replace(/\s+/g, '%20');
+}
+
+function downloadZip(compName, compositionFileContent, headerContent) {
+    const zip = new JSZip();
+    const sanitizedCompName = sanitizeCompName(compName);
+    const folder = zip.folder(sanitizedCompName);
+
+    folder.file('composition.sqe', compositionFileContent);
+    folder.file('header.sqe', headerContent);
+
+    zip.generateAsync({ type: 'blob' })
+        .then(content => {
+            saveAs(content, `${sanitizedCompName}.zip`);
+        });
 }
 
 window.handleScaleChange = handleScaleChange;
